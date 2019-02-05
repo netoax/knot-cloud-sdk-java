@@ -1,5 +1,8 @@
 package br.org.cesar.knot.client;
 
+import br.org.cesar.knot.client.core.KNoTBasicOperation;
+import br.org.cesar.knot.client.core.KNoTWebSocketImpl;
+
 public class KNoTWebSocketClient {
 
 	private String hostname;
@@ -8,42 +11,14 @@ public class KNoTWebSocketClient {
 	private String token;
 	
 	public KNoTWebSocketClient(String hostname, String port, String id, String token) {
-		this.setHostname(hostname);
-		this.setPort(port);
-		this.setId(id);
-		this.setToken(token);
-	}
-
-	public String getHostname() {
-		return hostname;
-	}
-
-	public void setHostname(String hostname) {
 		this.hostname = hostname;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getPort() {
-		return port;
-	}
-
-	public void setPort(String port) {
 		this.port = port;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
+		this.id = id;
 		this.token = token;
 	}
 	
+	public void connect() {
+		KNoTBasicOperation client = new KNoTWebSocketImpl(this.hostname, this.port, this.id, this.token);
+		client.connect();
+	}
 }

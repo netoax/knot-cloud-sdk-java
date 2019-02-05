@@ -1,16 +1,57 @@
 package br.org.cesar.knot.client.core;
 
-public class KNoTWebSocketOperationImpl implements KNoTWebSocketOperation {
+import java.net.URI;
+import java.net.URISyntaxException;
 
-	public KNoTWebSocketOperationImpl() {
-	
+import com.google.gson.Gson;
+
+public class KNoTWebSocketImpl implements KNoTBasicOperation {
+
+	private URI serverUri;
+	private String id;
+	private String token;
+	private WebSocketConnection connection;
+
+	public KNoTWebSocketImpl(URI serverUri) {
+		this.serverUri = serverUri;
 	}
-	
+
+	public KNoTWebSocketImpl(String hostname, String port, String id, String token) {
+		this.id = id;
+		this.token = token;
+
+		try {
+			this.serverUri = new URI("ws://" + hostname + ":" + port);
+		} catch (URISyntaxException e) {
+
+		}
+	}
+
 	@Override
 	public void connect() {
-		WebSocketConnectionImpl connection = new WebSocketConnectionImpl();
-		connection.connect();
+		this.connection = new WebSocketConnection(this.serverUri);
+
+		try {
+			this.connection.connectBlocking();
+			this.identity(this.id, this.token);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
+
+	private void identity(String id, String token) {
+		Frame frame = new Frame("identity");
+		frame.addValueToData("uuid", id);
+		frame.addValueToData("token", token);
+		this.sendMessage(frame);
+	}
+
+	private void sendMessage(Frame frame) {
+		Gson gson = new Gson();
+		String message = gson.toJson(frame);
+		this.connection.sendMessage(message);
+	}
+
 
 	@Override
 	public void registerDevice() {

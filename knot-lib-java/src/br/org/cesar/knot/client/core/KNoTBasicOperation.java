@@ -1,6 +1,6 @@
 package br.org.cesar.knot.client.core;
 
-public interface KNoTWebSocketOperation {
+public interface KNoTBasicOperation {
 
 	public void connect();
 	

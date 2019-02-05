@@ -1,41 +1,46 @@
 package br.org.cesar.knot.client.core;
 
-public class WebSocketConnectionImpl implements WebSocketConnection {
+import java.net.URI;
 
-	@Override
-	public void connect() {
-		// TODO Auto-generated method stub
-		
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
+
+public class WebSocketConnection extends WebSocketClient{
+	
+	public WebSocketConnection(URI serverUri) {
+		super(serverUri);
 	}
 
-	@Override
-	public void onConnected() {
-		// TODO Auto-generated method stub
-		
+	public void startConnection() {
+		super.connect();
 	}
 
-	@Override
 	public void disconnect() {
-		// TODO Auto-generated method stub
-		
+		super.close();
+	}
+
+	public void sendMessage(String message) {
+		super.send(message);
 	}
 
 	@Override
-	public void onDisconnected() {
-		// TODO Auto-generated method stub
-		
+	public void onOpen(ServerHandshake handshakedata) {
+		System.out.println("Connection established!");
 	}
 
 	@Override
-	public void sendMessage() {
-		// TODO Auto-generated method stub
-		
+	public void onMessage(String message) {		
+		// TODO: send message to the client
 	}
 
 	@Override
-	public void onMessage() {
-		// TODO Auto-generated method stub
-		
+	public void onClose(int code, String reason, boolean remote) {
+		// TODO: handle disconnection
+	}
+
+	@Override
+	public void onError(Exception ex) {
+		// TODO: send error to the client
 	}
 
 }
