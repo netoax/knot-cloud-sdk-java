@@ -9,6 +9,7 @@ public class KNoTWebSocketClient {
 	private String port;
 	private String id;
 	private String token;
+	private KNoTBasicOperation client;
 	
 	public KNoTWebSocketClient(String hostname, String port, String id, String token) {
 		this.hostname = hostname;
@@ -18,7 +19,15 @@ public class KNoTWebSocketClient {
 	}
 	
 	public void connect() {
-		KNoTBasicOperation client = new KNoTWebSocketImpl(this.hostname, this.port, this.id, this.token);
+		client = new KNoTWebSocketImpl(this.hostname, this.port, this.id, this.token);
 		client.connect();
+	}
+	
+	public void registerDevice(String type, String name) {
+		client.registerDevice(type, name);
+	}
+	
+	public void registerDevice(String type, String name, String id) {
+		client.registerDevice(type, name, id);
 	}
 }

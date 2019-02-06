@@ -46,18 +46,32 @@ public class KNoTWebSocketImpl implements KNoTBasicOperation {
 		this.sendMessage(frame);
 	}
 
+	@Override
+	public void registerDevice(String type, String name) {
+		Frame frame = this.createRegisterFrame(type, name);
+		this.sendMessage(frame);
+	}
+
+	@Override
+	public void registerDevice(String type, String name, String id) {
+		Frame frame = this.createRegisterFrame(type, name);
+		frame.addValueToData("ie", id);
+		this.sendMessage(frame);
+	}
+	
+	private Frame createRegisterFrame(String type, String name) {
+		Frame frame = new Frame("register");
+		frame.addValueToData("type", type);		
+		frame.addValueToData("name", name);
+		return frame;
+	}
+
 	private void sendMessage(Frame frame) {
 		Gson gson = new Gson();
 		String message = gson.toJson(frame);
 		this.connection.sendMessage(message);
 	}
-
-
-	@Override
-	public void registerDevice() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public void getDevices() {

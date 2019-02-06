@@ -31,6 +31,7 @@ public class WebSocketConnection extends WebSocketClient{
 	@Override
 	public void onMessage(String message) {		
 		// TODO: send message to the client
+		System.out.println(message);
 	}
 
 	@Override

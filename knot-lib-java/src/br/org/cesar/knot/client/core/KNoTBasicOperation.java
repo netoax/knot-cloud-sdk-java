@@ -4,7 +4,9 @@ public interface KNoTBasicOperation {
 
 	public void connect();
 	
-	public void registerDevice();
+	public void registerDevice(String type, String name);
+
+	public void registerDevice(String type, String name, String id);
 	
 	public void getDevices();
 	
