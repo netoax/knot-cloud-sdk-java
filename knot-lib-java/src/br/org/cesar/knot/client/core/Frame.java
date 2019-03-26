@@ -6,7 +6,7 @@ import java.util.Map;
 public class Frame {
 
 	private String type;
-	private Map<String,String> data = new HashMap<String,String>();
+	private Map<String,Object> data = new HashMap<String, Object>();
 
 	public Frame(String type) {
 		this.setType(type);
@@ -20,8 +20,7 @@ public class Frame {
 		this.type = type;
 	}
 
-	public void addValueToData(String key, String value) {
+	public void addValueToData(String key, Object value) {
 		this.data.put(key, value);
 	}
-
 }

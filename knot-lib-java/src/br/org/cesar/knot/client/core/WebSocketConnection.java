@@ -6,7 +6,9 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 public class WebSocketConnection extends WebSocketClient{
-	
+
+	private KNoTCloudMessage messageListener;
+
 	public WebSocketConnection(URI serverUri) {
 		super(serverUri);
 	}
@@ -29,9 +31,20 @@ public class WebSocketConnection extends WebSocketClient{
 	}
 
 	@Override
-	public void onMessage(String message) {		
-		// TODO: send message to the client
-		System.out.println(message);
+	public void onMessage(String message) {
+        new Thread(new Runnable() {
+            @Override
+			public void run()
+            {
+                if (messageListener != null) {
+                    messageListener.on(message);
+                }
+            }
+        }).start();
+	}
+
+	public void registerMessageListener(KNoTCloudMessage messageListener) {
+		this.messageListener = messageListener;
 	}
 
 	@Override
