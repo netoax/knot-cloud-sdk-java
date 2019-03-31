@@ -42,3 +42,23 @@ After that, you just need to call the method passing the event type and listener
 
 	KNoTCloudMessage eventListener = new MyEvent();
 	client.on("data", eventListener);
+	
+### List Devices
+
+In order to list the devices owned by the authenticated device you should call the `getDevices()` method.
+
+
+	client.getDevices();
+	
+The devices will be received by an event listener registered to await the `devices` event.
+
+	public class MyEvent implements KNoTCloudMessage {
+		@Override
+		public void on(String devices) {
+			// List the devices
+			System.out.println(devices);
+		}
+	}
+	
+	KNoTCloudMessage eventListener = new MyEvent();
+	client.on("devices", eventListener);
